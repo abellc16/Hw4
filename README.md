@@ -3,7 +3,7 @@ Homework Assignment #4 for CSCI 4710
 
 ## HOMEWORK 4
 • Implement “View”, “Model”, and “Control” parts of the “vampire
-app”
+app”  
 • “View”  
   o Visualization results in a pie chart  
   o Need to update visualization results if “Model” logic is changed  

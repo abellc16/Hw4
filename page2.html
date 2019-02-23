@@ -22,14 +22,14 @@
         gender_str = "The user is female; ";
       }
        
-      var galic_str;
-      if(document.getElementById("galic_checkbox").checked)
+      var garlic_str;
+      if(document.getElementById("garlic_checkbox").checked)
       {
-        galic_str = "The user eats galic; ";
+        garlic_str = "The user eats garlic; ";
       }
       else
       {
-        galic_str = "The user does not eat galic; ";
+        garlic_str = "The user does not eat garlic; ";
       }
 
       var shadow_str;
@@ -44,7 +44,7 @@
       
       var comment_str = document.getElementById("comment").value;
 
-      document.getElementById('user_info').innerHTML = user_name_str + gender_str + galic_str + shadow_str + comment_str;
+      document.getElementById('user_info').innerHTML = user_name_str + gender_str + garlic_str + shadow_str + comment_str;
     }
 
     function insert_row(){
@@ -148,7 +148,7 @@
       <!-- without this, your rows will not be aligned -->
       <div class="form-group col-md-12">
         <div class="checkbox">
-          <label><input type="checkbox" id="galic_checkbox">Galic</label>
+          <label><input type="checkbox" id="garlic_checkbox">Garlic</label>
         </div>
         <div class="checkbox">
           <label><input type="checkbox" id="shadow_checkbox">Shadow</label>

@@ -1,6 +1,27 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+<title>Vampire Checker</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+  <script type="text/javascript">
+    function display_chosen_option() {
+      var x = document.getElementById("mySelect").selectedIndex;
+      var y = document.getElementById("mySelect").options;
+      window.alert("Index: " + y[x].index + " is " + y[x].text);
+      //pulls up charts and graphs based on selection - Rios
+      if(y[x].index == 0){
+      	window.open("example_24.htm");
+      }
+      else if(y[x].index == 1){
+      	window.open("page2.html");
+      }
+    }
+  </script>
 <style>
 body {
      background-color: hsla(60, 100%, 83%, 1.0);
@@ -17,20 +38,7 @@ p {
     
 }
 
- <title>Bootstrap Example</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-
-  <script type="text/javascript">
-    function display_chosen_option() {
-      var x = document.getElementById("mySelect").selectedIndex;
-      var y = document.getElementById("mySelect").options;
-      window.alert("Index: " + y[x].index + " is " + y[x].text);
-    }
-  </script>
+  
 
 </style>
 </head>
@@ -58,8 +66,6 @@ Is your friend a vampire?
     <select class="form-control" id="mySelect">
       <option value='1'>Random Guess</option>
       <option value='2'>Threshold Based Method</option>
-      <option value='3'>Decision Tree</option>
-      <option value='4'>Neural Network</option>
     </select>   
 
     <!-- write a function to display chosen option with a pop up window. -->

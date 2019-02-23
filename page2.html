@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+  <script type="text/javascript">
+    function output_user_info(){
+      var user_name_str = "The user is named: " + document.getElementById('first_name').value + " " + document.getElementById('middle_name').value + 
+                          " " + document.getElementById('last_name').value + "; ";
+      var gender_str;
+      if(document.getElementById("male_radio").checked)
+      {
+        gender_str = "The user is male; ";
+      }
+      else
+      {
+        gender_str = "The user is female; ";
+      }
+       
+      var galic_str;
+      if(document.getElementById("galic_checkbox").checked)
+      {
+        galic_str = "The user eats galic; ";
+      }
+      else
+      {
+        galic_str = "The user does not eat galic; ";
+      }
+
+      var shadow_str;
+      if(document.getElementById("shadow_checkbox").checked)
+      {
+        shadow_str = "The user has shadow; ";
+      }
+      else
+      {
+        shadow_str = "The user does not have shadow; ";
+      }
+      
+      var comment_str = document.getElementById("comment").value;
+
+      document.getElementById('user_info').innerHTML = user_name_str + gender_str + galic_str + shadow_str + comment_str;
+    }
+
+    function insert_row(){
+      var table = document.getElementById("saving_table");
+      // Create an empty <tr> element and add it to the 1st position of the table:
+      // BE CAREFUL!!! row 0 is our heading row
+      var row = table.insertRow(1);
+      // Try this
+      // var row = table.insertRow(0);
+      // Insert new cells (<td> elements) at the 1st and 2nd position of the "new" <tr> element:
+      var cell1 = row.insertCell(0);
+      var cell2 = row.insertCell(1);
+
+      // Add some text to the new cells:
+      //Trying to figure out how to add text from one table to another
+      cell1.innerHTML = document.getElementById('user_info').innerHTML = user_name_str;
+      cell2.innerHTML = document.getElementById('user_info').innerHTML = gender_str;
+    }
+    function delete_row(){
+      // delete the second row
+      document.getElementById("saving_table").deleteRow(1);
+    }
+    // based on https://stackoverflow.com/questions/10686888/delete-last-row-in-table
+    function delete_last_row(){
+      var table = document.getElementById('saving_table');
+      var row_count = table.rows.length;
+
+      table.deleteRow(row_count -1);
+    }
+  </script>
+</head>
+<body>
+
+<div class="container">
+ <table class="table table-bordered" id="saving_table">
+    <caption>Classmates</caption>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Gender</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>January</td>
+        <td>$100</td>
+      </tr>
+      <tr>
+        <td>February</td>
+        <td>$80</td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td>Sum</td>
+        <td>$180</td>
+      </tr>
+    </tfoot>
+  </table>
+
+  <button class="btn btn-primary" onclick="delete_row()">Delete the second Row</button>
+  <button class="btn btn-primary" onclick="delete_last_row()">Delete the last Row</button>
+</div>
+
+<div class="container">
+  <h2>Form control: input</h2>
+  <form>
+    <div class="form-row">
+      <!-- md is short for Medium, >= 768 px -->
+      <div class="form-group col-md-4">
+        <label for="first_name">Frist Name</label>
+        <!-- possible types:  text, password, datetime, datetime-local, date, month, time, week, number, email, url, search, tel, and color. -->
+        <input type="text" class="form-control" id="first_name" placeholder="Frist Name">
+      </div>
+
+      <!-- The .form-group class is the easiest way to add some structure to forms. It provides a flexible class that encourages proper grouping of labels, controls, optional help text, and form validation messaging. -->
+      <div class="form-group col-md-4">
+        <label for="middle_name">Middle Name</label>
+        <input type="text" class="form-control" id="middle_name" placeholder="Middle Name">
+      </div>
+
+      <div class="form-group col-md-4">
+        <label for="last_name">Last Name</label>
+        <input type="text" class="form-control" id="last_name" placeholder="Last Name">
+      </div>
+    </div>
+
+
+   <div class="form-row">
+      <div class="form-group col-md-12">
+        <div class="radio">
+          <label><input type="radio" name="optradio" id="male_radio" checked>Male</label>
+        </div>
+        <div class="radio">
+          <label><input type="radio" name="optradio" id="female_radio">Female</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <!-- without this, your rows will not be aligned -->
+      <div class="form-group col-md-12">
+        <div class="checkbox">
+          <label><input type="checkbox" id="galic_checkbox">Galic</label>
+        </div>
+        <div class="checkbox">
+          <label><input type="checkbox" id="shadow_checkbox">Shadow</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col-md-12">
+        <label for="comment">Comment:</label>
+        <textarea class="form-control" rows="5" id="comment"></textarea>
+      </div>
+    </div>
+  </form>
+
+  <!-- How to display all user input information as a paragraph? Finish the output_user_info function -->
+  <button class="btn btn-primary" onclick="output_user_info(), insert_row()">Submit</button>
+  
+  <p id="user_info"></p>
+</div>
+
+</body>
+</html>

@@ -15,36 +15,39 @@
       var gender_str;
       if(document.getElementById("male_radio").checked)
       {
-        gender_str = "The user is male; ";
+        gender_str = "The user is Male; ";
       }
       else
       {
-        gender_str = "The user is female; ";
+        gender_str = "The user is Female; ";
       }
        
-      var galic_str;
-      if(document.getElementById("galic_checkbox").checked)
+      var garlic_str;
+      if(document.getElementById("garlic_checkbox").checked)
       {
-        galic_str = "The user eats galic; ";
+        garlic_str = "The user has eaten Garlic; ";
       }
       else
       {
-        galic_str = "The user does not eat galic; ";
+        garlic_str = "The user has not eaten Garlic; ";
       }
 
       var shadow_str;
       if(document.getElementById("shadow_checkbox").checked)
       {
-        shadow_str = "The user has shadow; ";
+        shadow_str = "The user has a Shadow; ";
       }
       else
       {
-        shadow_str = "The user does not have shadow; ";
+        shadow_str = "The user does not have a Shadow; ";
       }
+	  var complexion_index = document.getElementById("complexion_select").selectedIndex;
+      var complexion_options = document.getElementById("complexion_select").options;
+	  var complexion_str = "The users complexion is " + complexion_options[complexion_index].text + ";";
       
       var comment_str = document.getElementById("comment").value;
 
-      document.getElementById('user_info').innerHTML = user_name_str + gender_str + galic_str + shadow_str + comment_str;
+      document.getElementById('user_info').innerHTML = user_name_str + gender_str + garlic_str + shadow_str + complexion_str + comment_str;
     }
   </script>
 </head>
@@ -57,9 +60,9 @@
     <div class="form-row">
       <!-- md is short for Medium, >= 768 px -->
       <div class="form-group col-md-4">
-        <label for="first_name">Frist Name</label>
+        <label for="first_name">First Name</label>
         <!-- possible types:  text, password, datetime, datetime-local, date, month, time, week, number, email, url, search, tel, and color. -->
-        <input type="text" class="form-control" id="first_name" placeholder="Frist Name">
+        <input type="text" class="form-control" id="first_name" placeholder="First Name">
       </div>
 
       <!-- The .form-group class is the easiest way to add some structure to forms. It provides a flexible class that encourages proper grouping of labels, controls, optional help text, and form validation messaging. -->
@@ -77,6 +80,7 @@
 
    <div class="form-row">
       <div class="form-group col-md-12">
+      	<label for="male_radio">Sex</label>
         <div class="radio">
           <label><input type="radio" name="optradio" id="male_radio" checked>Male</label>
         </div>
@@ -90,17 +94,29 @@
       <!-- without this, your rows will not be aligned -->
       <div class="form-group col-md-12">
         <div class="checkbox">
-          <label><input type="checkbox" id="galic_checkbox">Galic</label>
+          <label><input type="checkbox" id="garlic_checkbox">Has eaten Garlic</label>
         </div>
         <div class="checkbox">
-          <label><input type="checkbox" id="shadow_checkbox">Shadow</label>
+          <label><input type="checkbox" id="shadow_checkbox">Has a Shadow</label>
         </div>
       </div>
     </div>
+	
+    <div class="form-row">
+      <div class="form-group col-md-12">
+        <label for="complexion_select">complexion:</label>
+        <select size= 4 class="form-control" id="complexion_select">
+          <option value='1'>Pale</option>
+          <option value='2'>Fair</option>
+          <option value='3'>Olive</option>
+          <option value='4'>Brown</option>
+        </select>
+      </div>
+	</div>
 
     <div class="form-row">
       <div class="form-group col-md-12">
-        <label for="comment">Comment:</label>
+        <label for="comment"><br>Comment:</label>
         <textarea class="form-control" rows="5" id="comment"></textarea>
       </div>
     </div>

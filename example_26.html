@@ -5,10 +5,15 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-
   <script type="text/javascript">
+  
+  var classmate_data = [
+
+  ];
+  
     function output_user_info(){
       var user_name_str = "The user is named: " + document.getElementById('first_name').value + " " + document.getElementById('middle_name').value + 
                           " " + document.getElementById('last_name').value + "; ";
@@ -48,6 +53,77 @@
       var comment_str = document.getElementById("comment").value;
 
       document.getElementById('user_info').innerHTML = user_name_str + gender_str + garlic_str + shadow_str + complexion_str + comment_str;
+	  
+	  
+	  var person_data = 
+	    {
+          'name'      : user_name_str,
+		  'gender'    : gender_str,
+          'shadow'    : shadow_str,
+          'garlic'    : garlic_str,
+          'complexion': complexion_str,
+		  'comment'   : comment_str
+        };
+	  
+      classmate_data.push(person_data);
+    }
+	
+    function classmate_data_processing(result_data){
+      // this function process classmate data and create data table
+      var num_human = 1;
+      var num_vampire = 1;
+      for (var i =  0; i <= classmate_data.length - 1; i++) {
+        // logic for telling if student is a vampire
+		var vampire_points = 0;
+        if(classmate_data[i]['shadow'] == "The user does not have a Shadow; "){
+          vampire_points += 4;
+        }
+		if(classmate_data[i]['garlic'] == "The user has not eaten Garlic; "){
+          vampire_points += 3;
+        }
+		if(classmate_data[i]['complexion'] == "Pale"){
+          vampire_points += 3;
+        }
+        if(vampire_points > 6){
+          num_vampire ++;
+        }
+		else{
+		  num_human ++;
+		}
+      }
+      // Create the data table.
+      result_data.addColumn('string', 'Element');
+      result_data.addColumn('number', 'Vampire');
+      result_data.addRows([     
+        ['Human', num_human],
+        ['Vampire', num_vampire]
+      ]);
+
+    }
+	
+    // Load the Visualization API and the corechart package.
+    google.charts.load('current', {'packages':['corechart']});
+
+    // Set a callback to run when the Google Visualization API is loaded.
+    google.charts.setOnLoadCallback(drawChart);
+
+    
+    // Callback that creates and populates a data table,
+    // instantiates the pie chart, passes in the data and
+    // draws it.
+    function drawChart() {
+      var data = new google.visualization.DataTable();
+      classmate_data_processing(data);
+
+  
+      // Set chart options
+      var options = {'title':'How many vampires in the class?',
+                     'width':400,
+                     'height':300};
+
+      // Instantiate and draw our chart, passing in some options.
+      var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+      chart.draw(data, options);
     }
   </script>
 </head>
@@ -123,10 +199,11 @@
   </form>
 
   <!-- How to display all user input information as a paragraph? Finish the output_user_info function -->
-  <button class="btn btn-primary" onclick="output_user_info()">Submit</button>
+  <button class="btn btn-primary" onclick="output_user_info();drawChart()">Submit</button>
   
   <p id="user_info"></p>
 </div>
 
+  <div id="chart_div"></div>
 </body>
 </html>

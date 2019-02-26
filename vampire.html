@@ -1,105 +1,118 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>V</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-  <script type="text/javascript">
+	<title>Vampire or not</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+	<script type="text/javascript">
   
-  var classmate_data = [
-
-  ];
+	var classmate_data = [];
   
-    function output_user_info(){
-      var user_name_str = "The user is named: " + document.getElementById('first_name').value + " " + document.getElementById('middle_name').value + 
+	function output_user_info(){
+		var name = document.getElementById('first_name').value + " " + document.getElementById('middle_name').value + " " + document.getElementById('last_name').value;
+		var gender;
+		var garlic;
+		var shadow;
+		var complexion;
+		var vampire;
+		var user_name_str = "The user is named: " + document.getElementById('first_name').value + " " + document.getElementById('middle_name').value + 
                           " " + document.getElementById('last_name').value + "; ";
-      var gender_str;
-      if(document.getElementById("male_radio").checked)
-      {
-        gender_str = "The user is Male; ";
-      }
-      else
-      {
-        gender_str = "The user is Female; ";
-      }
+		var gender_str;
+		var vampire_points = 0;
+		if(document.getElementById("male_radio").checked)
+		{
+			gender = "male";
+			gender_str = "The user is Male; ";
+		}
+		else
+		{
+			gender = "female";
+			gender_str = "The user is Female; ";
+		}
        
-      var garlic_str;
-      if(document.getElementById("garlic_checkbox").checked)
-      {
-        garlic_str = "The user has eaten Garlic; ";
-      }
-      else
-      {
-        garlic_str = "The user has not eaten Garlic; ";
-      }
+		var garlic_str;
+		if(document.getElementById("garlic_checkbox").checked)
+		{
+		garlic = "true";
+		garlic_str = "The user has eaten Garlic; ";
+		}
+		else
+		{
+			garlic = "false";
+			vampire_points += 3;
+			garlic_str = "The user has not eaten Garlic; ";
+		}
 
-      var shadow_str;
-      if(document.getElementById("shadow_checkbox").checked)
-      {
-        shadow_str = "The user has a Shadow; ";
-      }
-      else
-      {
-        shadow_str = "The user does not have a Shadow; ";
-      }
-	  var complexion_index = document.getElementById("complexion_select").selectedIndex;
-      var complexion_options = document.getElementById("complexion_select").options;
-	  var complexion_str = "The users complexion is " + complexion_options[complexion_index].text + ";";
-      
-      var comment_str = document.getElementById("comment").value;
+		var shadow_str;
+		if(document.getElementById("shadow_checkbox").checked)
+		{
+			shadow = "true";
+			shadow_str = "The user has a Shadow; ";
+		}
+		else
+		{
+			shadow = "false";
+			vampire_points += 4;
+			shadow_str = "The user does not have a Shadow; ";
+		}
+		var complexion_index = document.getElementById("complexion_select").selectedIndex;
+		var complexion_options = document.getElementById("complexion_select").options;
+		var complexion_str = "The users complexion is " + complexion_options[complexion_index].text + ";";
+		complexion = complexion_options[complexion_index].text;
+		if(complexion_str == "Pale")
+		{
+			vampire_points += 3;
+		}
+		var vampire_str;
+		if (vampire_points > 6){
+			vampire_str = "true";
+		}
+		else{
+			vampire_str = "false";
+		}
+		var comment_str = document.getElementById("comment").value;
 
-      document.getElementById('user_info').innerHTML = user_name_str + gender_str + garlic_str + shadow_str + complexion_str + comment_str;
+		document.getElementById('user_info').innerHTML = user_name_str + gender_str + garlic_str + shadow_str + complexion_str + comment_str;
 	  
-	  
-	  var person_data = 
+		var person_data = 
 	    {
-          'name'      : user_name_str,
-		  'gender'    : gender_str,
-          'shadow'    : shadow_str,
-          'garlic'    : garlic_str,
-          'complexion': complexion_str,
-		  'comment'   : comment_str
+			'name'      : name,
+			'gender'    : gender,
+			'shadow'    : shadow,
+			'garlic'    : garlic,
+			'complexion': complexion,
+			'vampire'	  : vampire_str,
+			'comment'   : comment_str
         };
 	  
-      classmate_data.push(person_data);
-    }
+		classmate_data.push(person_data);
+	}
 	
     function classmate_data_processing(result_data){
-      // this function process classmate data and create data table
-      var num_human = 1;
-      var num_vampire = 1;
-      for (var i =  0; i <= classmate_data.length - 1; i++) {
-        // logic for telling if student is a vampire
-		var vampire_points = 0;
-        if(classmate_data[i]['shadow'] == "The user does not have a Shadow; "){
-          vampire_points += 4;
-        }
-		if(classmate_data[i]['garlic'] == "The user has not eaten Garlic; "){
-          vampire_points += 3;
-        }
-		if(classmate_data[i]['complexion'] == "Pale"){
-          vampire_points += 3;
-        }
-        if(vampire_points > 6){
-          num_vampire ++;
-        }
-		else{
-		  num_human ++;
+		// this function process classmate data and create data table
+		var num_human = 0;
+		var num_vampire = 0;
+		for (var i =  0; i <= classmate_data.length - 1; i++) {
+			// logic for telling if student is a vampire
+			if(classmate_data[i]['vampire'] == "true"){
+				num_vampire++;
+			}
+			else{
+			num_human++;
+			}
 		}
-      }
-      // Create the data table.
-      result_data.addColumn('string', 'Element');
-      result_data.addColumn('number', 'Vampire');
-      result_data.addRows([     
-        ['Human', num_human],
-        ['Vampire', num_vampire]
-      ]);
-
-    }
+		// Create the data table.
+		result_data.addColumn('string', 'Element');
+		result_data.addColumn('number', 'Vampire');
+		result_data.addRows([     
+			['Human', num_human],
+			['Vampire', num_vampire]
+		]);
+	}
 	
     // Load the Visualization API and the corechart package.
     google.charts.load('current', {'packages':['corechart']});
@@ -112,8 +125,8 @@
     // instantiates the pie chart, passes in the data and
     // draws it.
     function drawChart() {
-      var data = new google.visualization.DataTable();
-      classmate_data_processing(data);
+		var data = new google.visualization.DataTable();
+		classmate_data_processing(data);
 
   
       // Set chart options
@@ -126,59 +139,116 @@
       chart.draw(data, options);
     }
 	
+	function makeTable() {
+    let table = $("#classmate_table tbody"); table.empty();
+    const tableDom = table[0];
 
+		for (var i =  0; i <= classmate_data.length - 1; i++) {
+			const row = tableDom.insertRow(0);
+			const nameCell = row.insertCell(0);
+			const sexCell = row.insertCell(1);
+			const shadowCell = row.insertCell(2);
+			const garlicCell = row.insertCell(3);
+			const complexionCell = row.insertCell(4);
+			const isVampireCell = row.insertCell(5);
+			const commentCell = row.insertCell(6);
+
+			// Add some text to the new cells:
+			nameCell.innerHTML = classmate_data[i].name;
+			sexCell.innerHTML = classmate_data[i].gender;
+			shadowCell.innerHTML = classmate_data[i].shadow;
+			garlicCell.innerHTML = classmate_data[i].garlic;
+			complexionCell.innerHTML = classmate_data[i].complexion;
+			isVampireCell.innerHTML = classmate_data[i].vampire;
+			commentCell.innerHTML = classmate_data[i].comment;
+		};
+	}
+	function hide_options(){
+    if(document.getElementById("mySelect").value == '1'){
+        document.getElementById("hide").style.display = "none";
+
+        var chosenValue = Math.random() < 0.5 ? 1 : 2;
+        if(chosenValue == 1){
+            document.getElementById("garlic_checkbox").checked = true;
+            document.getElementById("garlic_checkbox").checked = true;
+            document.getElementById('complexion_select').value = 4;
+
+        }else{
+            document.getElementById("garlic_checkbox").checked = false;
+            document.getElementById("garlic_checkbox").checked = false;
+            document.getElementById('complexion_select').value = 4;
+        }
+    }else{
+        document.getElementById("hide").style.display = "block";
+        document.getElementById("garlic_checkbox").checked = false;
+        document.getElementById("garlic_checkbox").checked = false;
+        document.getElementById('complexion_select').value = null;
+    }
+  }
+  function hide1(){
+	document.getElementById("mySelect").value = '2'
+  }
+  function hide2(){
+	document.getElementById("mySelect").value = '1'
+  }
 </script>
 </head>
 <body>
 
 
 <div class="container">
-  <h2>Form control: input</h2>
-  <form>
-    <div class="form-row">
-      <!-- md is short for Medium, >= 768 px -->
-      <div class="form-group col-md-4">
-        <label for="first_name">First Name</label>
-        <!-- possible types:  text, password, datetime, datetime-local, date, month, time, week, number, email, url, search, tel, and color. -->
-        <input type="text" class="form-control" id="first_name" placeholder="First Name">
-      </div>
+	<h2>Form control: select</h2>
+		<label for="mySelect">Select Model Logic:</label>
+		<select class="form-control" id="mySelect" onchange="hide_options()">
+			<option value='1'>Random Guess</option>
+			<option value='2'>Threshold Based Method</option>
+		</select>
+	<h2>Is your classmate a vampire?</h2>
+	<form>
+		<div class="form-row">
+			<!-- md is short for Medium, >= 768 px -->
+			<div class="form-group col-md-4">
+				<label for="first_name">First Name</label>
+				<!-- possible types:  text, password, datetime, datetime-local, date, month, time, week, number, email, url, search, tel, and color. -->
+				<input type="text" class="form-control" id="first_name" placeholder="First Name">
+			</div>
 
-      <!-- The .form-group class is the easiest way to add some structure to forms. It provides a flexible class that encourages proper grouping of labels, controls, optional help text, and form validation messaging. -->
-      <div class="form-group col-md-4">
-        <label for="middle_name">Middle Name</label>
-        <input type="text" class="form-control" id="middle_name" placeholder="Middle Name">
-      </div>
+			<!-- The .form-group class is the easiest way to add some structure to forms. It provides a flexible class that encourages proper grouping of labels, controls, optional help text, and form validation messaging. -->
+			<div class="form-group col-md-4">
+				<label for="middle_name">Middle Name</label>
+				<input type="text" class="form-control" id="middle_name" placeholder="Middle Name">
+			</div>
 
-      <div class="form-group col-md-4">
-        <label for="last_name">Last Name</label>
-        <input type="text" class="form-control" id="last_name" placeholder="Last Name">
-      </div>
-    </div>
+			<div class="form-group col-md-4">
+				<label for="last_name">Last Name</label>
+				<input type="text" class="form-control" id="last_name" placeholder="Last Name">
+			</div>
+		</div>
 
 
-   <div class="form-row">
-      <div class="form-group col-md-12">
-      	<label for="male_radio">Sex</label>
-        <div class="radio">
-          <label><input type="radio" name="optradio" id="male_radio" checked>Male</label>
-        </div>
-        <div class="radio">
-          <label><input type="radio" name="optradio" id="female_radio">Female</label>
-        </div>
-      </div>
-    </div>
-
-    <div class="form-row">
-      <!-- without this, your rows will not be aligned -->
-      <div class="form-group col-md-12">
-        <div class="checkbox">
-          <label><input type="checkbox" id="garlic_checkbox">Has eaten Garlic</label>
-        </div>
-        <div class="checkbox">
-          <label><input type="checkbox" id="shadow_checkbox">Has a Shadow</label>
-        </div>
-      </div>
-    </div>
+		<div class="form-row">
+			<div class="form-group col-md-12">
+				<label for="male_radio">Sex</label>
+					<div class="radio">
+						<label><input type="radio" name="optradio" id="male_radio" checked>Male</label>
+					</div>
+					<div class="radio">
+						<label><input type="radio" name="optradio" id="female_radio">Female</label>
+					</div>
+			</div>
+		</div>
+		<div id="hide">
+			<div class="form-row">
+				<!-- without this, your rows will not be aligned -->
+				<div class="form-group col-md-12">
+					<div class="checkbox">
+						<label><input type="checkbox" id="garlic_checkbox">Has eaten Garlic</label>
+					</div>
+					<div class="checkbox">
+						<label><input type="checkbox" id="shadow_checkbox">Has a Shadow</label>
+					</div>
+				</div>
+			</div>
 	
     <div class="form-row">
       <div class="form-group col-md-12">
@@ -190,6 +260,7 @@
           <option value='4'>Brown</option>
         </select>
       </div>
+	</div>
 	</div>
 
     <div class="form-row">
@@ -213,7 +284,6 @@
                 <th>Eats no Garlic</th>
                 <th>Is Pale</th>
                 <th>Vampire</th>
-                <th>Model</th>
                 <th>Comment</th>
             </tr>
             </thead>
@@ -222,7 +292,7 @@
     </div>
 
   <!-- How to display all user input information as a paragraph? Finish the output_user_info function -->
-  <button class="btn btn-primary" onclick="output_user_info();drawChart()">Submit</button>
+  <button class="btn btn-primary" onclick="output_user_info();drawChart();makeTable();hide1();hide2()">Submit</button>
   
   <p id="user_info"></p>
 </div>
